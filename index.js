@@ -9,11 +9,15 @@ app.get("/numbers", async (req, res) => {
     const all_urls = req.query.urls.split(",");
     const numbers = [];
     for (const i of all_urls) {
+      try {
         const response = await fetch(url, { timeout: time });
         if (response.status === 200) {
           const number = await response.json();
           numbers.push(...new Set(number.numbers));
-        } 
+        }
+      } catch (e) {
+        console.error(`Error retrieving numbers from ${i}:`, e.message);
+      }
     }
     res.json({ numbers });
   });
