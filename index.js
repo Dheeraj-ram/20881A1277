@@ -13,9 +13,10 @@ app.get("/numbers", async (req, res) => {
         if (response.status === 200) {
           const number = await response.json();
           numbers.push(...new Set(number.numbers));
-        }  
-    } 
+        } 
+    }
     res.json({ numbers });
   });
-  
-
+  app.listen(port, () => {
+    console.log(`The number management service is now running on port ${port}`);
+  });
